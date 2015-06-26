@@ -18,7 +18,11 @@ var BrowserSyncPlugin = require('extract-text-webpack-plugin');
 module.exports = {
     ...
     plugins: [
-        new BrowserSyncPlugin({ host: 'localhost', port: 3000, server: { baseDir: ['public'] })
+        new BrowserSyncPlugin({
+          host: 'localhost',
+          port: 3000,
+          server: { baseDir: ['public'] }
+        })
     ]
 }
 ```
