@@ -1,0 +1,28 @@
+{
+  "name": "browser-sync-webpack-plugin",
+  "version": "0.1.0",
+  "description": "BrowserSync and Webpack integration",
+  "keywords": [
+    "webpack",
+    "webpack-plugin",
+    "browsersync",
+    "browser-sync",
+    "livereload",
+    "serve"
+  ],
+  "main": "index.js",
+  "devDependencies": {
+    "webpack": "*"
+  },
+  "peerDependencies": {
+    "webpack": "^1.9.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Va1/browser-sync-webpack-plugin.git"
+  },
+  "homepage": "https://github.com/Va1/browser-sync-webpack-plugin",
+  "author": "Valentyn Barmashyn <valpreacher@gmail.com>",
+  "license": "MIT",
+  "private": false
+}
