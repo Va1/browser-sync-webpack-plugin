@@ -13,7 +13,7 @@ $ npm install --save-dev browser-sync-webpack-plugin
 In your `webpack.config.js`:
 
 ```javascript
-var BrowserSyncPlugin = require('extract-text-webpack-plugin');
+var BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 
 module.exports = {
     ...
