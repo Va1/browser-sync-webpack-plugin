@@ -6,6 +6,7 @@ function Plugin(options) {
   self.options = options;
   self.webpackIsWatching = false;
   self.browserSyncIsRunning = false;
+  self.browserSync = browserSync;
 }
 
 Plugin.prototype.apply = function (compiler) {
