@@ -20,9 +20,9 @@ Plugin.prototype.apply = function (compiler) {
   compiler.plugin('done', function (stats) {
     if (self.webpackIsWatching) {
       if (self.browserSyncIsRunning) {
-        browserSync.reload();
+        self.browserSync.reload();
       } else {
-        browserSync(self.options);
+        self.browserSync(self.options);
         self.browserSyncIsRunning = true;
       }
     }
