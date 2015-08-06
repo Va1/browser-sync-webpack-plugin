@@ -1,6 +1,6 @@
 {
   "name": "browser-sync-webpack-plugin",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "BrowserSync and Webpack integration",
   "keywords": [
     "webpack",
@@ -11,13 +11,12 @@
     "serve"
   ],
   "main": "index.js",
-  "dependencies": {
-    "browser-sync": "^2.7.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "webpack": "*"
   },
   "peerDependencies": {
+    "browser-sync": "^2.7.0",
     "webpack": "^1.9.0"
   },
   "repository": {
