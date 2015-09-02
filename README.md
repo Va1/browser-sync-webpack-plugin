@@ -24,7 +24,7 @@ In your `webpack.config.js`:
 var BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 
 module.exports = {
-    ...
+    // ...
     plugins: [
         new BrowserSyncPlugin({
           host: 'localhost',
@@ -43,7 +43,7 @@ In your `webpack.config.js`:
 var BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 
 module.exports = {
-    ...
+    // ...
     plugins: [
         new BrowserSyncPlugin(
           // browserSync options
