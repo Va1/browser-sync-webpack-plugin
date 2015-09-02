@@ -1,12 +1,21 @@
+var _ = require('lodash');
 var browserSync = require('browser-sync');
 
-
-function Plugin(options) {
+function Plugin(browserSyncOptions, options) {
   var self = this;
-  self.options = options;
+
+  var defaultOptions = {
+    reload: true,
+    name: 'bs-webpack-plugin',
+    callback: undefined
+  };
+
+  self.browserSyncOptions = _.extend({}, browserSyncOptions);
+  self.options = _.extend({}, defaultOptions, options);
+
+  self.browserSync = browserSync.create(self.options.name);
   self.webpackIsWatching = false;
   self.browserSyncIsRunning = false;
-  self.browserSync = browserSync;
 }
 
 Plugin.prototype.apply = function (compiler) {
@@ -20,9 +29,16 @@ Plugin.prototype.apply = function (compiler) {
   compiler.plugin('done', function (stats) {
     if (self.webpackIsWatching) {
       if (self.browserSyncIsRunning) {
-        self.browserSync.reload();
+        if (self.options.reload) {
+          self.browserSync.reload();
+        }
       } else {
-        self.browserSync(self.options);
+        if (_.isFunction(self.options.callback)) {
+          self.browserSync.init(self.browserSyncOptions, self.options.callback);
+        } else {
+          self.browserSync.init(self.browserSyncOptions);
+        }
+
         self.browserSyncIsRunning = true;
       }
     }
