@@ -7,6 +7,7 @@ function Plugin(browserSyncOptions, options) {
   var defaultOptions = {
     reload: true,
     name: 'bs-webpack-plugin',
+    use: [],
     callback: undefined
   };
 
@@ -14,6 +15,14 @@ function Plugin(browserSyncOptions, options) {
   self.options = _.extend({}, defaultOptions, options);
 
   self.browserSync = browserSync.create(self.options.name);
+  if (!_.isArray(self.options.use)) {
+    self.options.use = [self.options.use];
+  }
+
+  self.options.use.forEach(function(o) {
+    self.browserSync.use(o);
+  });
+
   self.webpackIsWatching = false;
   self.browserSyncIsRunning = false;
 }

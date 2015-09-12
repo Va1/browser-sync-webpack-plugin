@@ -68,7 +68,11 @@ module.exports = {
             // might be useful if you combine this plugin
             // with webpack-dev-server to reach
             // Hot Loader/Hot Module Replacement tricks
-            reload: true
+            reload: true,
+
+            // Configure the browserSync instance by calling "use" with the supplied value(s).
+            // eg. use: require('browser-sync-spa')()
+            use: function || [function]
           }
         )
     ]
