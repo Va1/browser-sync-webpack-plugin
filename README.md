@@ -16,21 +16,10 @@ BrowserSync will start only when you run Webpack in [watch mode](http://webpack.
 $ webpack --watch
 ```
 
-## Overview:
-
-It is important to understand how the combination of Webpack and BrowserSync actually serve your site.
-Even though the BrowserSync plugin is installed in Webpack, the Webpack Dev Server is still the one serving your site.
-And that is good, because it provides you with hot module reloading and other goodness.
-
-### So what about BrowserSync then?
-
-The main point in having BrowserSync in the mix is to add its capability of syncing browsers
-without losing all the goodness delivered by the Webpack Dev Server.
-
-To achive this BrowserSync offers the `proxy` option. So basically we are proxying the output from the Webpack Dev Server
-through BrowserSync to get the best out of both.
-
 ### Basic:
+
+If you're not using Webpack Dev Server, you can make BrowserSync to serve your project.
+The setup is pretty easy: just pass the [BrowserSync options](http://www.browsersync.io/docs/options/) to the plugin as the first argument.
 
 In your `webpack.config.js`:
 
@@ -38,74 +27,58 @@ In your `webpack.config.js`:
 var BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 
 module.exports = {
-    // ...
-    plugins: [
-        new BrowserSyncPlugin({
-          // browse to http://localhost:3000 during develpment
-          host: 'localhost',
-          port: 3000,
-          // proxy the webpack dev server endpoint
-          // through BrowserSync 
-          proxy: 'http://localhost:8080/'
-        },
-        {
-          // let webpack dev server take care
-          // of the automatic and hot reloading
-          reload: false
-        })
-    ]
+  // ...
+  plugins: [
+    new BrowserSyncPlugin({
+      // browse to http://localhost:3000/ during development,
+      // ./public directory is being served
+      host: 'localhost',
+      port: 3000,
+      server: { baseDir: ['public'] }
+    })
+  ]
 }
 ```
 
 ### Advanced:
 
+The advanced usage is about using [Webpack Dev Server](https://github.com/webpack/webpack-dev-server) with BrowserSync in order to use awesome features of both.
+
+To achieve this, BrowserSync offers the [proxy](http://www.browsersync.io/docs/options/#option-proxy) option.
+So, basically, you are about to proxy the output from the Webpack Dev Server through BrowserSync to get the best out of both.
+
 In your `webpack.config.js`:
 
 ```javascript
 var BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 
 module.exports = {
-    // ...
-    plugins: [
-        new BrowserSyncPlugin(
-          // browserSync options
-          // http://www.browsersync.io/docs/options/
-          {
-            // browse to http://localhost:3000 during develpment
-            host: 'localhost',
-            port: 3000,
-            // proxy the webpack dev server endpoint
-            // through BrowserSync 
-            proxy: 'http://localhost:8080/'
-          },
-          // plugin options
-          {
-            // browserSync instance name
-            // http://www.browsersync.io/docs/api/#api-name
-            name: 'my-awesome-bs-instance',
-            // browserSync instance init callback
-            // http://www.browsersync.io/docs/api/#api-cb
-            callback: function () {
-              console.log('browserSync started!');
-            },
-            // determines if browserSync should take care
-            // of reload (defaults to true). switching it off
-            // might be useful if you combine this plugin
-            // with webpack-dev-server to reach
-            // Hot Loader/Hot Module Replacement tricks
-            reload: false
-          }
-        )
-    ]
+  // ...
+  plugins: [
+    new BrowserSyncPlugin(
+      // BrowserSync options
+      {
+        // browse to http://localhost:3000/ during development
+        host: 'localhost',
+        port: 3000,
+        // proxy the Webpack Dev Server endpoint
+        // (which is serving on http://localhost:3100/)
+        // through BrowserSync
+        proxy: 'http://localhost:3100/'
+      },
+      // plugin options
+      {
+        // prevent BrowserSync from reloading the page
+        // and let Webpack Dev Server take care of this
+        reload: false
+      }
+    )
+  ]
 }
 ```
 
-## iFrame:
-
-Another interesting option is to proxy a complete different site through BrowserSync.
-If this other site is hosting your site via an iFrame you still get all the goodness
-from Webpack Dev Server and BrowserSync while developing your site within its final
-container. Isn't that amazing ;)
+Another plugin options supported are `name` - BrowserSync [instance name](http://www.browsersync.io/docs/api/#api-name)
+and `callback` - BrowserSync [instance init callback](http://www.browsersync.io/docs/api/#api-cb).
 
 ## Contributing:
 
