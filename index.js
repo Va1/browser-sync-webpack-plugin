@@ -1,7 +1,7 @@
 var _ = require('lodash');
 var browserSync = require('browser-sync');
 
-function Plugin(browserSyncOptions, options) {
+function BrowserSyncPlugin(browserSyncOptions, options) {
   var self = this;
 
   var defaultOptions = {
