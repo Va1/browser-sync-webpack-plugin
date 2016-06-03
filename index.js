@@ -18,7 +18,7 @@ function BrowserSyncPlugin(browserSyncOptions, options) {
   self.browserSyncIsRunning = false;
 }
 
-Plugin.prototype.apply = function (compiler) {
+BrowserSyncPlugin.prototype.apply = function (compiler) {
   var self = this;
 
   compiler.plugin('watch-run', function (watching, callback) {
@@ -45,4 +45,4 @@ Plugin.prototype.apply = function (compiler) {
   });
 };
 
-module.exports = Plugin;
+module.exports = BrowserSyncPlugin;
