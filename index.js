@@ -1,38 +1,40 @@
 var _ = require('lodash');
 var browserSync = require('browser-sync');
 
-function BrowserSyncPlugin(browserSyncOptions, options) {
+function BrowserSyncPlugin(browserSyncOptions, pluginOptions) {
   var self = this;
 
-  var defaultOptions = {
+  var defaultPluginOptions = {
     reload: true,
     name: 'bs-webpack-plugin',
     callback: undefined
   };
 
   self.browserSyncOptions = _.extend({}, browserSyncOptions);
-  self.options = _.extend({}, defaultOptions, options);
+  self.options = _.extend({}, defaultPluginOptions, pluginOptions);
 
   self.browserSync = browserSync.create(self.options.name);
-  self.webpackIsWatching = false;
-  self.browserSyncIsRunning = false;
+  self.isWebpackWatching = false;
+  self.isBrowserSyncRunning = false;
 }
 
 BrowserSyncPlugin.prototype.apply = function (compiler) {
   var self = this;
 
   compiler.plugin('watch-run', function (watching, callback) {
-    self.webpackIsWatching = true;
+    self.isWebpackWatching = true;
     callback(null, null);
   });
 
   compiler.plugin('compilation', function () {
-    self.browserSync.notify('Rebuilding');
+    if (self.isBrowserSyncRunning) {
+      self.browserSync.notify('Rebuilding...');
+    }
   });
 
   compiler.plugin('done', function (stats) {
-    if (self.webpackIsWatching) {
-      if (self.browserSyncIsRunning) {
+    if (self.isWebpackWatching) {
+      if (self.isBrowserSyncRunning) {
         if (self.options.reload) {
           self.browserSync.reload();
         }
@@ -43,7 +45,7 @@ BrowserSyncPlugin.prototype.apply = function (compiler) {
           self.browserSync.init(self.browserSyncOptions);
         }
 
-        self.browserSyncIsRunning = true;
+        self.isBrowserSyncRunning = true;
       }
     }
   });
