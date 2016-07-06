@@ -26,6 +26,10 @@ BrowserSyncPlugin.prototype.apply = function (compiler) {
     callback(null, null);
   });
 
+  compiler.plugin('compilation', function () {
+    self.browserSync.notify('Rebuilding');
+  });
+
   compiler.plugin('done', function (stats) {
     if (self.webpackIsWatching) {
       if (self.browserSyncIsRunning) {
