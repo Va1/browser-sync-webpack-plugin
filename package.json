@@ -1,6 +1,6 @@
 {
   "name": "browser-sync-webpack-plugin",
-  "version": "1.1.0",
+  "version": "1.1.2",
   "description": "BrowserSync and Webpack integration",
   "keywords": [
     "webpack",
@@ -12,12 +12,12 @@
   ],
   "main": "index.js",
   "dependencies": {
-    "lodash": "^4.x.x"
+    "lodash": "4.x.x"
   },
   "devDependencies": {},
   "peerDependencies": {
-    "browser-sync": "^2.x.x",
-    "webpack": "^1.9.0"
+    "browser-sync": "2.x.x",
+    "webpack": "1.x.x || 2.x.x"
   },
   "repository": {
     "type": "git",
