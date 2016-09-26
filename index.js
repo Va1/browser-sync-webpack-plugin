@@ -25,10 +25,10 @@ BrowserSyncPlugin.prototype.apply = function (compiler) {
 
   compiler.plugin('done', function (stats) {
     if (stats.hasErrors() || stats.hasWarnings()) {
+      var error = stats.toString('minimal')
       return self.browserSync.sockets.emit('fullscreen:message', {
         title: 'Webpack Error:',
-        body: stripAnsi(stats.toString()),
-        timeout: 100000
+        body: stripAnsi(error),
       })
     }
     self.browserSync.reload()
