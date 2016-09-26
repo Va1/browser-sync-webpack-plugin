@@ -12,7 +12,7 @@
   ],
   "main": "index.js",
   "dependencies": {
-    "bs-fullscreen-message": "~1.1.0",
+    "bs-fullscreen-message": "Kikobeats/bs-fullscreen-message",
     "lodash": "4.x.x",
     "strip-ansi": "~3.0.1"
   },
