@@ -5,14 +5,17 @@ var browserSync = require('browser-sync');
 function BrowserSyncPlugin(browserSyncOptions, pluginOptions) {
   var self = this;
 
+  var defaultBrowserSyncOptions = {
+    plugins: ['bs-fullscreen-message']
+  }
+
   var defaultPluginOptions = {
     reload: true,
     name: 'bs-webpack-plugin',
-    callback: undefined,
-    plugins: ['bs-fullscreen-message']
+    callback: undefined
   };
 
-  self.browserSyncOptions = _.extend({}, browserSyncOptions);
+  self.browserSyncOptions = _.extend({}, defaultBrowserSyncOptions, browserSyncOptions);
   self.options = _.extend({}, defaultPluginOptions, pluginOptions);
 
   self.browserSync = browserSync.create(self.options.name);
@@ -30,8 +33,9 @@ BrowserSyncPlugin.prototype.apply = function (compiler) {
         title: 'Webpack Error:',
         body: stripAnsi(error),
       })
+    } else {
+      return self.browserSync.sockets.emit('fullscreen:message:clear')
     }
-    self.browserSync.reload()
   })
 
   compiler.plugin('watch-run', function (watching, callback) {
