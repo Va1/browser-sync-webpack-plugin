@@ -1,5 +1,6 @@
 var _ = require('lodash');
-var stripAnsi = require('strip-ansi');
+var ansiToHtml = require('ansi-to-html');
+var convert = new ansiToHtml();
 var browserSync = require('browser-sync');
 
 function BrowserSyncPlugin(browserSyncOptions, pluginOptions) {
@@ -31,9 +32,13 @@ BrowserSyncPlugin.prototype.apply = function (compiler) {
       var error = stats.toString('minimal')
       return self.browserSync.sockets.emit('fullscreen:message', {
         title: 'Webpack Error:',
-        body: stripAnsi(error),
+        body: convert.toHtml(error),
       })
     } else {
+      if (self.options.reload) {
+        self.browserSync.reload();
+      }
+
       return self.browserSync.sockets.emit('fullscreen:message:clear')
     }
   })
@@ -51,11 +56,7 @@ BrowserSyncPlugin.prototype.apply = function (compiler) {
 
   compiler.plugin('done', function (stats) {
     if (self.isWebpackWatching) {
-      if (self.isBrowserSyncRunning) {
-        if (self.options.reload) {
-          self.browserSync.reload();
-        }
-      } else {
+      if (!self.isBrowserSyncRunning) {
         if (_.isFunction(self.options.callback)) {
           self.browserSync.init(self.browserSyncOptions, self.options.callback);
         } else {
