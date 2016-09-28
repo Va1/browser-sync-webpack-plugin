@@ -14,7 +14,7 @@
   "dependencies": {
     "bs-fullscreen-message": "Kikobeats/bs-fullscreen-message",
     "lodash": "4.x.x",
-    "strip-ansi": "~3.0.1"
+    "ansi-to-html": "^0.4.2"
   },
   "devDependencies": {},
   "peerDependencies": {
