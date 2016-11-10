@@ -1,7 +1,9 @@
-var _ = require('lodash');
+'use strict'
+
+var isFunction = require('lodash.isfunction');
+var browserSync = require('browser-sync');
 var ansiToHtml = require('ansi-to-html');
 var convert = new ansiToHtml();
-var browserSync = require('browser-sync');
 
 function BrowserSyncPlugin(browserSyncOptions, pluginOptions) {
   var self = this;
@@ -16,8 +18,8 @@ function BrowserSyncPlugin(browserSyncOptions, pluginOptions) {
     callback: undefined
   };
 
-  self.browserSyncOptions = _.extend({}, defaultBrowserSyncOptions, browserSyncOptions);
-  self.options = _.extend({}, defaultPluginOptions, pluginOptions);
+  self.browserSyncOptions = Object.assign({}, defaultBrowserSyncOptions, browserSyncOptions);
+  self.options = Object.assign({}, defaultPluginOptions, pluginOptions);
 
   self.browserSync = browserSync.create(self.options.name);
   self.isWebpackWatching = false;
@@ -57,7 +59,7 @@ BrowserSyncPlugin.prototype.apply = function (compiler) {
   compiler.plugin('done', function (stats) {
     if (self.isWebpackWatching) {
       if (!self.isBrowserSyncRunning) {
-        if (_.isFunction(self.options.callback)) {
+        if (isFunction(self.options.callback)) {
           self.browserSync.init(self.browserSyncOptions, self.options.callback);
         } else {
           self.browserSync.init(self.browserSyncOptions);

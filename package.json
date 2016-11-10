@@ -12,9 +12,9 @@
   ],
   "main": "index.js",
   "dependencies": {
-    "bs-fullscreen-message": "Kikobeats/bs-fullscreen-message",
-    "lodash": "4.x.x",
-    "ansi-to-html": "^0.4.2"
+    "ansi-to-html": "~0.4.2",
+    "bs-pretty-message": "~1.0.0",
+    "lodash.isfunction": "~3.0.8"
   },
   "devDependencies": {},
   "peerDependencies": {
