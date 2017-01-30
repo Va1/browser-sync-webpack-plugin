@@ -69,7 +69,7 @@ module.exports = {
       // plugin options
       {
         // prevent BrowserSync from reloading the page
-        // and let Webpack Dev Server take care of this
+        // and let Webpack Dev Server takes care of this
         reload: false
       }
     )
