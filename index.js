@@ -33,10 +33,32 @@ BrowserSyncPlugin.prototype.apply = function (compiler) {
   });
 
   compiler.plugin('done', function (stats) {
+
+    // If compiled files contain .js files then reload browser, other than that inject CSS
+    var assets = _.keys(stats.compilation.assets),
+        isJS = _(assets)
+          // organize the assets for cleaner use
+          .map(function(asset){
+            return {
+              name: asset,
+              emitted: stats.compilation.assets[asset].emitted
+            }
+          })
+          // remove asset files that have not been emitted
+          .filter(function(asset){ return asset.emitted })
+          // .some() stops iterating the assets array when a condition is met (assets contain javascript files)
+          .some(function(asset){
+            return asset.name.match('.js') !== null;
+          });
+
     if (self.isWebpackWatching) {
       if (self.isBrowserSyncRunning) {
         if (self.options.reload) {
-          self.browserSync.reload();
+          if (isJS)
+            self.browserSync.reload();
+          else
+            // inject css if no .js was compiled
+            self.browserSync.reload('*.css');
         }
       } else {
         if (_.isFunction(self.options.callback)) {
