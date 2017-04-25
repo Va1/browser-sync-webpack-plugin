@@ -34,9 +34,9 @@ BrowserSyncPlugin.prototype.apply = function (compiler) {
 
   compiler.plugin('done', function (stats) {
 
-    // If compiled files contain .js files then reload browser, other than that inject CSS
+    // assets contains all the compiled assets
     var assets = _.keys(stats.compilation.assets),
-        isJS = _(assets)
+        isCSS = _(assets)
           // organize the assets for cleaner use
           .map(function(asset){
             return {
@@ -46,19 +46,19 @@ BrowserSyncPlugin.prototype.apply = function (compiler) {
           })
           // remove asset files that have not been emitted
           .filter(function(asset){ return asset.emitted })
-          // .some() stops iterating the assets array when a condition is met (assets contain javascript files)
-          .some(function(asset){
-            return asset.name.match('.js') !== null;
+          // true if all assets contain .css, false for anything else (.js, .img, etc)
+          .every(function(asset){
+            return asset.name.match('.css') !== null;
           });
 
     if (self.isWebpackWatching) {
       if (self.isBrowserSyncRunning) {
         if (self.options.reload) {
-          if (isJS)
-            self.browserSync.reload();
-          else
-            // inject css if no .js was compiled
+          if (isCSS)
+            // inject css if all compiled assets are css
             self.browserSync.reload('*.css');
+          else
+            self.browserSync.reload();
         }
       } else {
         if (_.isFunction(self.options.callback)) {
