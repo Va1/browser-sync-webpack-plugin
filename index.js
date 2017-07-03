@@ -27,7 +27,7 @@ BrowserSyncPlugin.prototype.apply = function (compiler) {
   });
 
   compiler.plugin('compilation', function () {
-    if (self.isBrowserSyncRunning) {
+    if (self.isBrowserSyncRunning && self.browserSyncOptions.notify) {
       self.browserSync.notify('Rebuilding...');
     }
   });
