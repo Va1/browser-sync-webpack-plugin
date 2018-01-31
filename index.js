@@ -33,10 +33,32 @@ BrowserSyncPlugin.prototype.apply = function (compiler) {
   });
 
   compiler.plugin('done', function (stats) {
+
+    // assets contains all the compiled assets
+    var assets = _.keys(stats.compilation.assets),
+        isCSS = _(assets)
+          // organize the assets for cleaner use
+          .map(function(asset){
+            return {
+              name: asset,
+              emitted: stats.compilation.assets[asset].emitted
+            }
+          })
+          // remove asset files that have not been emitted
+          .filter(function(asset){ return asset.emitted })
+          // true if all assets contain .css, false for anything else (.js, .img, etc)
+          .every(function(asset){
+            return asset.name.match('.css') !== null;
+          });
+
     if (self.isWebpackWatching) {
       if (self.isBrowserSyncRunning) {
         if (self.options.reload) {
-          self.browserSync.reload();
+          if (isCSS)
+            // inject css if all compiled assets are css
+            self.browserSync.reload('*.css');
+          else
+            self.browserSync.reload();
         }
       } else {
         if (_.isFunction(self.options.callback)) {
