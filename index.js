@@ -1,76 +1,67 @@
-var _ = require('lodash');
-var browserSync = require('browser-sync');
+const { extend, get, isFunction } = require('lodash')
+const browserSync = require('browser-sync')
 
 function BrowserSyncPlugin(browserSyncOptions, pluginOptions) {
-  var self = this;
-
-  var defaultPluginOptions = {
+  const defaultPluginOptions = {
     reload: true,
     name: 'bs-webpack-plugin',
-    callback: undefined
-  };
+    callback: undefined,
+    injectCss: false
+  }
 
-  self.browserSyncOptions = _.extend({}, browserSyncOptions);
-  self.options = _.extend({}, defaultPluginOptions, pluginOptions);
+  this.browserSyncOptions = extend({}, browserSyncOptions)
+  this.options = extend({}, defaultPluginOptions, pluginOptions)
 
-  self.browserSync = browserSync.create(self.options.name);
-  self.isWebpackWatching = false;
-  self.isBrowserSyncRunning = false;
+  this.browserSync = browserSync.create(this.options.name)
+  this.isWebpackWatching = false
+  this.isBrowserSyncRunning = false
+}
+
+function isCssOnlyEmission(stats) {
+  const assetsStatsMapping = get(stats, 'compilation.assets', {})
+  const assetsNames = Object.keys(assetsStatsMapping)
+
+  return (
+    assetsNames
+      .map(assetName => ({ name: assetName, wasEmitted: get(assetsStatsMapping, [assetName, 'emitted'], false) }))
+      .filter(asset => asset.wasEmitted)
+      .every(asset => asset.name.includes('.css'))
+  )
 }
 
 BrowserSyncPlugin.prototype.apply = function (compiler) {
-  var self = this;
+  compiler.plugin('watch-run', (watching, callback) => {
+    this.isWebpackWatching = true
+    callback(null, null)
+  })
 
-  compiler.plugin('watch-run', function (watching, callback) {
-    self.isWebpackWatching = true;
-    callback(null, null);
-  });
-
-  compiler.plugin('compilation', function () {
-    if (self.isBrowserSyncRunning && self.browserSyncOptions.notify) {
-      self.browserSync.notify('Rebuilding...');
+  compiler.plugin('compilation', () => {
+    if (this.isBrowserSyncRunning && this.browserSyncOptions.notify) {
+      this.browserSync.notify('Rebuilding...')
     }
-  });
+  })
 
-  compiler.plugin('done', function (stats) {
-
-    // assets contains all the compiled assets
-    var assets = _.keys(stats.compilation.assets),
-        isCSS = _(assets)
-          // organize the assets for cleaner use
-          .map(function(asset){
-            return {
-              name: asset,
-              emitted: stats.compilation.assets[asset].emitted
-            }
-          })
-          // remove asset files that have not been emitted
-          .filter(function(asset){ return asset.emitted })
-          // true if all assets contain .css, false for anything else (.js, .img, etc)
-          .every(function(asset){
-            return asset.name.match('.css') !== null;
-          });
-
-    if (self.isWebpackWatching) {
-      if (self.isBrowserSyncRunning) {
-        if (self.options.reload) {
-          if (isCSS)
-            // inject css if all compiled assets are css
-            self.browserSync.reload('*.css');
-          else
-            self.browserSync.reload();
+  compiler.plugin('done', stats => {
+    if (this.isWebpackWatching) {
+      if (this.isBrowserSyncRunning) {
+        if (this.options.reload) {
+          if (this.options.injectCss && isCssOnlyEmission(stats)) {
+            this.browserSync.reload('*.css')
+          } else {
+            this.browserSync.reload()
+          }
         }
       } else {
-        if (_.isFunction(self.options.callback)) {
-          self.browserSync.init(self.browserSyncOptions, self.options.callback);
+        if (isFunction(this.options.callback)) {
+          this.browserSync.init(this.browserSyncOptions, this.options.callback)
         } else {
-          self.browserSync.init(self.browserSyncOptions);
+          this.browserSync.init(this.browserSyncOptions)
         }
 
-        self.isBrowserSyncRunning = true;
+        this.isBrowserSyncRunning = true
       }
     }
-  });
-};
+  })
+}
 
-module.exports = BrowserSyncPlugin;
+module.exports = BrowserSyncPlugin
