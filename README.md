@@ -8,6 +8,9 @@ Easily use BrowserSync in your Webpack project.
 $ npm install --save-dev browser-sync-webpack-plugin
 ```
 
+With release of 2.0.0 plugin is expected to be used in node v4+ environment.
+Support for node of v3 and lower was dropped, but you can install and use plugin version of 1.2.0 for old environments. 
+
 ## Usage:
 
 BrowserSync will start only when you run Webpack in [watch mode](http://webpack.github.io/docs/tutorials/getting-started/#watch-mode):
@@ -77,8 +80,11 @@ module.exports = {
 }
 ```
 
-Another plugin options supported are `name` - BrowserSync [instance name](http://www.browsersync.io/docs/api/#api-name)
-and `callback` - BrowserSync [instance init callback](http://www.browsersync.io/docs/api/#api-cb).
+Another plugin options supported are:
+
+* `name` - BrowserSync [instance name](http://www.browsersync.io/docs/api/#api-name)
+* `callback` - BrowserSync [instance init callback](http://www.browsersync.io/docs/api/#api-cb).
+* `injectCss` - allows BrowserSync to inject changes inplace instead of reloading the page when changed chunks are all CSS files
 
 ## Contributing:
 
