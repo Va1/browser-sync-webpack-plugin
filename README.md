@@ -8,8 +8,8 @@ Easily use BrowserSync in your Webpack project.
 $ npm install --save-dev browser-sync-webpack-plugin
 ```
 
-With release of 2.0.0 plugin is expected to be used in node v4+ environment.
-Support for node of v3 and lower was dropped, but you can install and use plugin version of 1.2.0 for old environments. 
+With release of 2.0.0 the plugin is expected to be used in Node v4+ environment.
+Support for Node v3 and lower was dropped, but you can install and use the plugin version of 1.2.0 in older environments. 
 
 ## Usage:
 
@@ -27,7 +27,7 @@ The setup is pretty easy: just pass the [BrowserSync options](http://www.browser
 In your `webpack.config.js`:
 
 ```javascript
-var BrowserSyncPlugin = require('browser-sync-webpack-plugin');
+const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 
 module.exports = {
   // ...
@@ -53,7 +53,7 @@ So, basically, you are about to proxy the output from the Webpack Dev Server thr
 In your `webpack.config.js`:
 
 ```javascript
-var BrowserSyncPlugin = require('browser-sync-webpack-plugin');
+const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 
 module.exports = {
   // ...
