@@ -1,6 +1,6 @@
 {
   "name": "browser-sync-webpack-plugin",
-  "version": "1.2.0",
+  "version": "2.0.1",
   "description": "BrowserSync and Webpack integration",
   "keywords": [
     "webpack",
@@ -24,7 +24,7 @@
     "url": "https://github.com/Va1/browser-sync-webpack-plugin.git"
   },
   "homepage": "https://github.com/Va1/browser-sync-webpack-plugin",
-  "author": "Valentyn Barmashyn <valpreacher@gmail.com>",
+  "author": "Valentyn Barmashyn <barmashyn.val@gmail.com>",
   "license": "MIT",
   "private": false
 }
