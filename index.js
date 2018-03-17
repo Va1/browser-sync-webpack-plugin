@@ -1,3 +1,3 @@
-const BrowserSyncPlugin = require('./lib/BrowserSyncPlugin')
+const BrowserSyncPlugin = require("./lib/BrowserSyncPlugin");
 
-module.exports = BrowserSyncPlugin
+module.exports = BrowserSyncPlugin;
