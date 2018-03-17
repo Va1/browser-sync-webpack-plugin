@@ -1,4 +1,4 @@
-# [BrowserSync](http://www.browsersync.io/) plugin for [Webpack](http://webpack.github.io/)
+# [BrowserSync](https://browsersync.io/) plugin for [Webpack](https://webpack.js.org/)
 
 Easily use BrowserSync in your Webpack project.
 
@@ -7,6 +7,8 @@ Easily use BrowserSync in your Webpack project.
 ```bash
 $ npm install --save-dev browser-sync-webpack-plugin
 ```
+
+Version 3.0.0 brings support for webpack 4 (legato) which requires Node >= 8.9.4.
 
 With release of 2.0.0 the plugin is expected to be used in Node v4+ environment.
 Support for Node v3 and lower was dropped, but you can install and use the plugin version of 1.2.0 in older environments.
