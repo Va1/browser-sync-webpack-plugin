@@ -7,8 +7,10 @@ Easily use BrowserSync in your Webpack project.
 ```bash
 $ npm install --save-dev browser-sync-webpack-plugin
 ```
-
-Version 3.0.0 brings support for webpack 4 (legato) which requires Node >= 8.9.4.
+or
+```bash
+$ yarn add --dev browser-sync-webpack-plugin
+```
 
 With release of 2.0.0 the plugin is expected to be used in Node v4+ environment.
 Support for Node v3 and lower was dropped, but you can install and use the plugin version of 1.2.0 in older environments.
@@ -29,7 +31,7 @@ The setup is pretty easy: just pass the [BrowserSync options](http://www.browser
 In your `webpack.config.js`:
 
 ```javascript
-const BrowserSyncPlugin = require("browser-sync-webpack-plugin");
+const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
 
 module.exports = {
   // ...
@@ -37,12 +39,12 @@ module.exports = {
     new BrowserSyncPlugin({
       // browse to http://localhost:3000/ during development,
       // ./public directory is being served
-      host: "localhost",
+      host: 'localhost',
       port: 3000,
-      server: { baseDir: ["public"] }
+      server: { baseDir: ['public'] }
     })
   ]
-};
+}
 ```
 
 ### Advanced:
@@ -55,7 +57,7 @@ So, basically, you are about to proxy the output from the Webpack Dev Server thr
 In your `webpack.config.js`:
 
 ```javascript
-const BrowserSyncPlugin = require("browser-sync-webpack-plugin");
+const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
 
 module.exports = {
   // ...
@@ -64,12 +66,12 @@ module.exports = {
       // BrowserSync options
       {
         // browse to http://localhost:3000/ during development
-        host: "localhost",
+        host: 'localhost',
         port: 3000,
         // proxy the Webpack Dev Server endpoint
         // (which should be serving on http://localhost:3100/)
         // through BrowserSync
-        proxy: "http://localhost:3100/"
+        proxy: 'http://localhost:3100/'
       },
       // plugin options
       {
@@ -79,16 +81,16 @@ module.exports = {
       }
     )
   ]
-};
+}
 ```
 
 ---
 
 Other supported plugin options are:
 
-* `name` - Default: `bs-webpack-plugin`, BrowserSync [instance name](http://www.browsersync.io/docs/api/#api-name)
-* `callback` - Default: `undefined`, BrowserSync [instance init callback](http://www.browsersync.io/docs/api/#api-cb).
-* `injectCss` - Default: `true`, allows BrowserSync to inject changes inplace instead of reloading the page when changed chunks are all CSS files
+* `name` - default: `bs-webpack-plugin`, BrowserSync [instance name](http://www.browsersync.io/docs/api/#api-name)
+* `callback` - default: `undefined`, BrowserSync [instance init callback](http://www.browsersync.io/docs/api/#api-cb).
+* `injectCss` - default: `false`, allows BrowserSync to inject changes inplace instead of reloading the page when changed chunks are all CSS files
 
 ## Contributing:
 
