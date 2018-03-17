@@ -14,7 +14,11 @@
   "dependencies": {
     "lodash": "^4"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "husky": "^0.15.0-rc.9",
+    "lint-staged": "^7.0.0",
+    "standard": "^11.0.1"
+  },
   "peerDependencies": {
     "browser-sync": "^2",
     "webpack": "^4"
@@ -26,5 +30,16 @@
   "homepage": "https://github.com/Va1/browser-sync-webpack-plugin",
   "author": "Valentyn Barmashyn <barmashyn.val@gmail.com>",
   "license": "MIT",
-  "private": false
+  "private": false,
+  "lint-staged": {
+    "lib/**/*.js": [
+      "standard --fix",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  }
 }
