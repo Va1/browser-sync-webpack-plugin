@@ -1,6 +1,6 @@
 {
   "name": "browser-sync-webpack-plugin",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "description": "BrowserSync and Webpack integration",
   "keywords": [
     "webpack",
