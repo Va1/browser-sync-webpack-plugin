@@ -21,7 +21,7 @@
   },
   "peerDependencies": {
     "browser-sync": "^2",
-    "webpack": "^1 || ^2 || ^3 || ^4"
+    "webpack": "^1 || ^2 || ^3 || ^4 || ^5"
   },
   "repository": {
     "type": "git",
