@@ -20,7 +20,7 @@
     "standard": "^11.0.1"
   },
   "peerDependencies": {
-    "browser-sync": "^2",
+    "browser-sync": "^3",
     "webpack": "^1 || ^2 || ^3 || ^4 || ^5"
   },
   "repository": {
