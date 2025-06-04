@@ -15,13 +15,16 @@
     "lodash": "^4"
   },
   "devDependencies": {
-    "husky": "^0.15.0-rc.9",
-    "lint-staged": "^7.0.0",
-    "standard": "^11.0.1"
+    "husky": "^9",
+    "lint-staged": "^15",
+    "standard": "^17"
   },
   "peerDependencies": {
     "browser-sync": "^2 || ^3",
     "webpack": "^1 || ^2 || ^3 || ^4 || ^5"
+  },
+  "engines": {
+    "node": ">=4"
   },
   "repository": {
     "type": "git",
@@ -33,8 +36,7 @@
   "private": false,
   "lint-staged": {
     "lib/**/*.js": [
-      "standard --fix",
-      "git add"
+      "standard --fix"
     ]
   },
   "husky": {
